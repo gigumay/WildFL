@@ -1,4 +1,3 @@
-
 # WildFL - Federated Learning for Aerial Wildlife Monitoring
 
 ![1784194777761](image/README/1784194777761.png)
@@ -7,7 +6,7 @@ This repo contains all code necessary to recreate the federated learning (FL) )s
 
 ## Repository Content
 
-Implementations of all FL algorithms can be found in the `./algorithms` folder, and  `helpers.py` contains all helper functions necessary to execute them exactly as was done for teh aforementioned paper. Note that we provide these helper functions to facilitate precise reproduction of our methodology, but since the content of `helpers.py`  mainly concerns model evaluation, modification or replacement with alternative evaluation pipelines should yield comparable results. Further instructions can be found in `example_usage.ipynb`.
+Implementations of all FL algorithms can be found in the `./algorithms` folder, and  `helpers.py` contains auxilliary functions necessary to run everything exactly as was done in the aforementioned paper. Note that we provide these helper functions to facilitate precise reproduction of our methodology, but since the content of `helpers.py`  mainly concerns model evaluation, modification or replacement with alternative evaluation pipelines should yield comparable results. Further instructions can be found in `example_usage.ipynb`.
 
 ## Prerequisites
 

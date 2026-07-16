@@ -1,10 +1,8 @@
 import sys
 import json
-import warnings 
-import random
+import warnings
 import shutil
 import torch
-import torchvision
 
 from types import SimpleNamespace
 from pathlib import Path
@@ -228,16 +226,15 @@ class FedProto:
                  ann_format: str,
                  training_params: dict,
                  inf_params: dict,
-                 min_iou_eval: float,
                  img_format: str, 
                  eval_split: str, 
                  use_tiling: bool, 
                  output_dir: str, 
-                 rm_client_data: bool = False, 
+                 rm_client_data: bool = False,
+                 min_iou_eval: float = 0.5, 
                  box_dims: dict = None,  
                  patch_dims: dict = None, 
-                 patch_overlap: float = None,
-                 measure_performance: bool = True) -> dict:
+                 patch_overlap: float = None) -> dict:
         """
         Runs federated training and evaluation for multiple rounds. The structure of data_dir must meet the following requirements:
         --data_dir
@@ -298,37 +295,36 @@ class FedProto:
 
             results[f"round{i}"] = {}
 
-            if measure_performance:
-                for c in self.client_states.keys():
-                    #I have to load a new model every round because evaluation will put it into eval mode, which changes the model structure 
-                    #(layers are fused) and thereby also the state dict, making parameter aggregation in the subsequent round impossible.
+            for c in self.client_states.keys():
+                #I have to load a new model every round because evaluation will put it into eval mode, which changes the model structure 
+                #(layers are fused) and thereby also the state dict, making parameter aggregation in the subsequent round impossible.
 
-                    client_model = YOLO(f"{self.mdl_type}{self.mdl_version}.yaml")
-                    client_state = torch.load(self.client_states[c])
-                    client_model.model.load_state_dict(client_state)
-                    client_model.save(self.temp_model_path)
+                client_model = YOLO(f"{self.mdl_type}{self.mdl_version}.yaml")
+                client_state = torch.load(self.client_states[c])
+                client_model.model.load_state_dict(client_state)
+                client_model.save(self.temp_model_path)
 
-                    res = eval_single_model(mdl=self.temp_model_path, 
-                                            task="detect",  
-                                            data_dir=data_dir, 
-                                            img_format=img_format,
-                                            datasets2test=[c], 
-                                            eval_split=eval_split, 
-                                            use_tiling=use_tiling,
-                                            class_id2name=class_id2name,
-                                            radii=None,
-                                            dor=None,
-                                            ann_format=ann_format,
-                                            box_dims=box_dims, 
-                                            patch_dims=patch_dims, 
-                                            patch_overlap=patch_overlap, 
-                                            output_dir=output_dir,
-                                            inf_params=inf_params,
-                                            min_iou=min_iou_eval)
-                    results[f"round{i}"].update(res)
+                res = eval_single_model(mdl=self.temp_model_path, 
+                                        task="detect",  
+                                        data_dir=data_dir, 
+                                        img_format=img_format,
+                                        datasets2test=[c], 
+                                        eval_split=eval_split, 
+                                        use_tiling=use_tiling,
+                                        class_id2name=class_id2name,
+                                        radii=None,
+                                        dor=None,
+                                        ann_format=ann_format,
+                                        box_dims=box_dims, 
+                                        patch_dims=patch_dims, 
+                                        patch_overlap=patch_overlap, 
+                                        output_dir=output_dir,
+                                        inf_params=inf_params,
+                                        min_iou=min_iou_eval)
+                results[f"round{i}"].update(res)
 
 
-                    Path(self.temp_model_path).unlink()
+                Path(self.temp_model_path).unlink()
 
             with open(f"{output_dir}/result_fedproto.json", "w") as f:
                 json.dump(results, f, indent=1)

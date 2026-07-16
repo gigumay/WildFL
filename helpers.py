@@ -37,7 +37,7 @@ __all__ = ["DATA_ANN_FORMATS", "CLASS_COLORS", "NAMES_DIRECTORIES_FILES",
            "load_img_gt", "match_predictions", "plot_img_predictions",
            "read_output_SAHI", "img_inference",
            "compute_errors_img_lvl", "compute_em_img_lvl",
-           "eval_single_model", "get_single_metric_single_client"]
+           "eval_single_model"]
 
 
 # index/key maps describing how annotations are stored in the dataset annotation files
@@ -865,28 +865,3 @@ def eval_single_model(mdl: str, task: str, data_dir: str, img_format: str, datas
         shutil.rmtree(temp_dir)
 
     return results_dict
-
-
-def get_single_metric_single_client(results: dict, metric: str, cats: list, client: str) -> dict:
-    """
-    Retrieve values of a single evaluation metric for a single client across all rounds.
-    Arguments:
-        results (dict):     dictionary containing the results of the FL training.
-        metric (str):       metric to extract.
-        cats (list):        list of categories to extract the metric for.
-        client (str):       client to extract the metric for.
-    Returns:
-        dict:              dictionary containing the metric for each category.
-    """
-    rounds = sorted(results.keys(), key=lambda x: int(x.replace("round", "")))
-
-    out = {cat: {"global": []} for cat in cats}
-
-    for c in cats:
-        for rnd in rounds:
-            if metric in results[rnd][client]["count_err"][c].keys():
-                out[c]["global"].append(results[rnd][client]["count_err"][c][metric])
-            else:
-                out[c]["global"].append(results[rnd][client]["em"][c][metric])
-
-    return out
