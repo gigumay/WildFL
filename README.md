@@ -2,7 +2,7 @@
 
 ![1784194777761](image/README/1784194777761.png)
 
-This repository contains all code necessary to recreate the federated learning (FL) )setup presented in  "XY" (currently under review). While the dataset used for this study is [publicly available](https://openaccess.thecvf.com/content_CVPRW_2019/html/DOAI/Naude_The_Aerial_Elephant_Dataset_A_New_Public_Benchmark_for_Aerial_CVPRW_2019_paper.html), we cannot openly share the exact client splits out of data privacy concerns. All information necessary to assign individual images to clients was made available to us upon request to the authors of the dataset. Users attempting to reproduce our results are encouraged to follow the same procedure.
+This repository contains all code necessary to recreate the federated learning (FL) setup presented in  "XY" (currently under review). While the dataset used for this study is [publicly available](https://openaccess.thecvf.com/content_CVPRW_2019/html/DOAI/Naude_The_Aerial_Elephant_Dataset_A_New_Public_Benchmark_for_Aerial_CVPRW_2019_paper.html), we cannot openly share the exact client splits out of data privacy concerns. All information necessary to assign individual images to clients was made available to us upon request to the authors of the dataset. Users attempting to reproduce our results are encouraged to follow the same procedure.
 
 ## Repository Content
 
