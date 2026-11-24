@@ -60,7 +60,7 @@ All canonical file and directory names are defined in `helpers.NAMES_DIRECTORIES
 
 #### Packages and Environment
 
-The present approach requires installing the FL-compatible version of the `ultralytics` YOLO framework, which can be downloaded from [this repository.](https://anonymous.4open.science/r/YOLO4FL-C23B/README.md) **Importantly**, to run the `MOON` or `FedProto` algorithm,  YOLO must be installed from the corresponding branches (see the YOLO repository's `README`  for details regarding installation). All remaining necessary packages are listed in the `env.yaml` file of this repo.
+The present approach requires installing the FL-compatible version of the `ultralytics` YOLO framework, which can be downloaded from [this repository.](https://github.com/gigumay/YOLO4FL) **Importantly**, to run the `MOON` or `FedProto` algorithm,  YOLO must be installed from the corresponding branches (see the YOLO repository's `README`  for details regarding installation). All remaining necessary packages are listed in the `env.yaml` file of this repo.
 
 ## Contact Information
 
